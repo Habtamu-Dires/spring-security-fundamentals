@@ -1,0 +1,78 @@
+Lession 1:
+Spring Security is an application level security i.e Authentication and Authorization.
+	- security is large concept from network to infrastructure to container.
+Authentication -- the logic in your applicaiton that decides who is the user. do i know the user.
+Authorization --  the logic that decides if your allowd to do some action based on who you are.
+
+Authority and Role:
+ - Authority something you have.
+ - Role something you are.
+
+ Different ways of implementing Authentication:
+ - HTTP Basics - spring security pre con figuration to use HTTP basic.
+ - Certificate
+ - jwt(Oauth2)
+
+ Authorization wasy:
+ - Web Apps using Http filters
+ - Aspects
+
+ **Encoding vs Encrypt vs Hash Function
+ *Encoding : Mathmatical function that transforms input -> output, in such a way in whcich 
+    you can always reverse the output and find out the input if you now the 'rules'.
+    - you don't need the secret 
+    - ABCD -> DCBA
+    - e.g Base64
+
+*Encryption -a function transforms the input to output but to go back from output to input 
+	you always need a secret (key).
+  	- even if you know the rule you still need the key.
+
+*Hash Function -> transforms the input to output but you can never get input from the output
+	Rules in hash function : 1. Going from output to input is not possible
+							 2. If you have both the input and output , you should be able to
+							   say the input and output related one to the other.
+
+ 	- used to store passwords. -so that one can not see the real password just by seeing the stored password.
+
+
+Lesson 2: this note upported by images
+* UserDetailsService - is a contract/interface b/n spring security and the application, through whcih spring security knows how to obtain a user details.
+- by creating a UserDetailsService beans in spring context, this way gives spring security the way in which it gets the user details. it your choice where to store the user database, webservice, ...
+
+*Spring Security Architecture:
+*Spring security in web applications start from the filter. The filter could be Authentication filter.
+
+* We do have one Authentication Manager but moure authentication provider (you might have multiple authentication logic).
+
+* if the authentication provider use username and password -> it uses UserDetailsService and passwordendcoder beans.
+
+* if the authentcation succeded it goes back , and at end -> it stores the authentication object in the security context.
+
+**GrantedAuthorities -> can be Authorities or Roles.
+Authorities - are action a user can do --reprented by a verb --like READ, WRITE ..
+Role - are badges -- represneted by subjects -- like ADMIN, MANAGER, CLIENT, VISITOR ...
+
+- So it depends how you want to implement the your GrantedAuthorities -- based on action or badge.
+ -> it doesn't matter after all those since we have one interface i.e GrantedAuthorities.
+
+
+ Lesson 3: custom authentication
+* In this lesson we will build custom authentication filter, cutome authentication provider.
+* Here we do try to implement the request contains a header key with value "secret"
+
+*Each Http Request creates a Tread -> The security context 
+
+
+Lesson-4: Multiple Authentication Provider
+- you mighty have multiple Authentication filters.
+
+Lesson 5: End point authorization
+- Security starts with authentication and in the end the object with the information about who got authenticated 
+ will be stored in the security context.The securiyt context will hold the authorized 
+
+Authorization - two type 1. Endpoint authorization and 2. Method Authorization 
+1.EndPoint Authorization - applied only for webapps and applied through a filter chain, where the roules are applied. the filter are located before the controller (Restcontroller). 
+
+2.Method Authorization - can be applied on any method of beans that are managed by spring IoC.
+  - method authorization applied via aspects using AOP.
