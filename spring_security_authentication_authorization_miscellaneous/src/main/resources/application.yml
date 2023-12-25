@@ -1,0 +1,9 @@
+our.user.secret: secret
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/test
+    username: habt
+    password: password
+
+
