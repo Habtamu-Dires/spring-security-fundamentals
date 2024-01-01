@@ -6,6 +6,10 @@ import lombok.Setter;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
+
+import java.time.Duration;
 
 @Getter
 @Setter
@@ -56,6 +60,9 @@ public class Client {
                 .redirectUri(client.getRedirectUri())
                 .clientAuthenticationMethod(new ClientAuthenticationMethod(client.getAuthMethod()))
                 .authorizationGrantType(new AuthorizationGrantType(client.getGrantType()))
+                .tokenSettings(TokenSettings.builder()
+                        .accessTokenFormat(OAuth2TokenFormat.REFERENCE) //opaque token, default in non-opaque or jwt
+                        .accessTokenTimeToLive(Duration.ofHours(24)).build())
                 .build();
   }
 
