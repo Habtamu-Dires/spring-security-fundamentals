@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script type="text/javascript">
+        function call(){
+           var h = new XMLHttpRequest();
+           h.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200){
+                document.getElementById("output").innerHTML = this.responseText;
+            }
+           }
+            /* since browser compare it localhost with 127.0.0.1 as a string so it considered 
+             as a different orgin and creates a cors error. */
+
+           h.open("GET", "http://127.0.0.1:8080/demo", true);
+           h.send();
+        }
+    </script>
+
+</head>
+<body onload="call()">
+
+    <h1 id="output"></h1>
+
+</body>
+</html>
