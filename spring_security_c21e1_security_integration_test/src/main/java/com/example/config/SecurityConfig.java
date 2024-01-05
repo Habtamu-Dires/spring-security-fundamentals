@@ -13,13 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        return http.build();
-    }
-
+    
     @Bean
     public UserDetailsService userDetailsService(){
         UserDetails user1 = User.withUsername("bill")
@@ -30,6 +24,7 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(user1);
     }
 
+    @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
